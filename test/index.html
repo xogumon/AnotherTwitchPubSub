@@ -66,7 +66,6 @@
     .log > div pre {
       white-space: pre-wrap;
       word-break: break-all;
-      padding: 10px 0;
     }
 
     .login-logout a {
@@ -171,7 +170,7 @@
               const hljs = window.hljs;
               const parseCode = hljs.highlightAuto(code);
               const highlighted = addPreTag
-                ? `<pre><code class="hljs ${parseCode.language}">${parseCode.value}</code></pre>`
+                ? `<pre><code class="hljs lang-${parseCode.language}">${parseCode.value}</code></pre>`
                 : parseCode.value;
               resolve(highlighted);
             } catch (error) {
@@ -203,11 +202,11 @@
                         },
                         null,
                         2
-                      )
+                      ),
+                      false
                     ).then((code) => {
                       log(
-                        "<div><strong>Connected! 🎉</strong></div>",
-                        code,
+                        `<div><strong>Connected!</strong>🎉 ${code}</div>`,
                         `<p>Try redeeming a <strong>custom reward</strong> in your channel and see what happens, ${data.login}.`,
                         `<a href="https://www.twitch.tv/${data.login}/chat" target="_blank">(open in new tab)</a></p>`
                       );
