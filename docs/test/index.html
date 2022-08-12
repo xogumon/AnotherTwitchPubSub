@@ -183,8 +183,6 @@
         validateToken()
           .then((data) => {
             if (data.token && data.user_id) {
-              log("Token:", data.token);
-              log("UserID:", data.user_id);
               pubsub = new AnotherTwitchPubSub({
                 channelId: data.user_id,
                 authToken: data.token,
@@ -192,8 +190,10 @@
               })
                 .on("connected", () => {
                   log(
-                    "Connected:",
-                    "Try redeeming a <strong>custom reward</strong> in your channel 🎉",
+                    "<strong>Connected! 🎉</strong><br/>",
+                    `<em>channelId: ${data.user_id}</em><br/>`,
+                    `<em>authToken: ${data.token}</em><br/>`,
+                    "Try redeeming a <strong>custom reward</strong> in your channel",
                     `(<a href="https://www.twitch.tv/${data.login}/chat" target="_blank">twitch.tv/${data.login}/chat</a>)`
                   );
                 })
@@ -217,7 +217,10 @@
             }
           })
           .catch(() => {
-            log("Error:", "Something went wrong, please try again");
+            if (sessionStorage.getItem("twitchOAuthToken")) {
+              log("Error:", "Something went wrong, please try again");
+              logOut();
+            }
           });
       })();
     </script>
