@@ -51,6 +51,8 @@
     }
 
     .log div:first-child {
+      background-color: #22272e;
+      color: #fff;
       position: sticky;
       top: 0;
     }
@@ -60,12 +62,13 @@
     }
 
     .log div:hover {
-      background-color: #444;
+      background-color: #22272e;
       color: #fff;
     }
 
     .log div a {
       color: #000;
+      text-decoration: none;
     }
 
     .log div a:hover {
@@ -132,11 +135,6 @@
       const logoutHtml = `<a href="javascript:void(0)" onclick="logOut()">Disconnect</a>`;
 
       const logInLogOut = document.querySelector(".login-logout");
-      if (sessionStorage.getItem("twitchOAuthToken")) {
-        logInLogOut.innerHTML = logoutHtml;
-      } else {
-        logInLogOut.innerHTML = loginHtml;
-      }
 
       const logIn = () => {
         window.location.href = authUrl();
@@ -193,8 +191,17 @@
                 .on("connected", () => {
                   log(
                     "<strong>Connected! 🎉</strong><br/>",
-                    `<em>channelId: "${data.user_id}"</em><br/>`,
-                    `<em>authToken: "${data.token}"</em><br/>`,
+                    "<pre><code>",
+                    JSON.stringify(
+                      {
+                        channelId: data.user_id,
+                        authToken: data.token,
+                        topics: ["channel-points-channel-v1"],
+                      },
+                      null,
+                      2
+                    ),
+                    "</code></pre>",
                     "Try redeeming a <strong>custom reward</strong> in your channel",
                     `(<a href="https://www.twitch.tv/${data.login}/chat" target="_blank">twitch.tv/${data.login}/chat</a>)`
                   );
@@ -216,6 +223,9 @@
                     });
                   }
                 });
+              logInLogOut.innerHTML = logoutHtml;
+            } else {
+              logInLogOut.innerHTML = loginHtml;
             }
           })
           .catch(() => {
