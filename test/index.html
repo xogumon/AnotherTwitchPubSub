@@ -159,6 +159,15 @@
         });
       }
 
+      function highlightCode() {
+        const codeBlocks = document.querySelectorAll("pre code");
+        if (hljs) {
+          for (const codeBlock of codeBlocks) {
+            hljs.highlightBlock(codeBlock);
+          }
+        }
+      }
+
       (function () {
         if (window.location.hash) {
           parseFragment(window.location.hash);
@@ -189,12 +198,7 @@
                     `Try redeeming a <strong>custom reward</strong> in your channel and see what happens, ${data.login}.`,
                     `<a href="https://www.twitch.tv/${data.login}/chat" target="_blank">(open in new tab)</a>`
                   );
-                  if (hljs) {
-                    const codes = document.querySelectorAll("pre code");
-                    codes.forEach((code) => {
-                      hljs.highlightBlock(code);
-                    });
-                  }
+                  highlightCode();
                 })
                 .on("disconnected", () => {
                   log("Disconnected", "💤");
@@ -206,12 +210,7 @@
                     JSON.stringify(reward, null, 2),
                     "</code></pre>"
                   );
-                  if (hljs) {
-                    const codes = document.querySelectorAll("pre code");
-                    codes.forEach((code) => {
-                      hljs.highlightBlock(code);
-                    });
-                  }
+                  highlightCode();
                 });
               logInLogOut.innerHTML = logoutHtml;
             } else {
