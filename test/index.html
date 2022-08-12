@@ -169,10 +169,10 @@
           return new Promise((resolve, reject) => {
             try {
               const hljs = window.hljs;
-              const code = hljs.highlightAuto(code);
+              const parseCode = hljs.highlightAuto(code);
               const highlighted = addPreTag
-                ? `<pre><code class="hljs ${code.language}">${code.value}</code></pre>`
-                : code.value;
+                ? `<pre><code class="hljs ${parseCode.language}">${parseCode.value}</code></pre>`
+                : parseCode.value;
               resolve(highlighted);
             } catch (error) {
               reject(error);
