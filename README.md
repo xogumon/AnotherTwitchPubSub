@@ -35,7 +35,7 @@ You don't need include the channel ID in the topics array. It will be automatica
 
 - List of available topics can be found [here](https://dev.twitch.tv/docs/pubsub/#available-topics).
 
-### Usage (JavaScript)
+### Usage
 
 ```js
 const pubsub = new AnotherTwitchPubSub({
@@ -197,8 +197,8 @@ To see a full changelog, check out the [changelog](CHANGELOG.md) page on the Git
 
 ### Let's contribute!
 
-- [Create a pull request](https://github.com/xogumon/twitchPubSub/pulls)
-- [Report an issue](https://github.com/xogumon/twitchPubSub/issues)
+- [Create a pull request](https://github.com/xogumon/AnotherTwitchPubSub/pulls)
+- [Report an issue](https://github.com/xogumon/AnotherTwitchPubSub/issues)
 - [Join the discord server](https://discord.gg/as7YwYx2wm)
 - [Follow on twitter](https://twitter.com/xogumon)
 - [Follow on github](https://github.com/xogumon)
