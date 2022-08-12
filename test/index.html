@@ -160,13 +160,16 @@
         });
       }
 
-      function highlightCode() {
-        const codeBlocks = document.querySelectorAll("pre code");
-        if (hljs) {
-          for (const codeBlock of codeBlocks) {
-            hljs.highlightBlock(codeBlock);
+      function highlightCode(code) {
+        return new Promise((resolve, reject) => {
+          try {
+            const hljs = window.hljs;
+            const highlightedCode = hljs.highlightAuto(code).value;
+            resolve(highlightedCode);
+          } catch (error) {
+            reject(error);
           }
-        }
+        });
       }
 
       (function () {
@@ -183,9 +186,7 @@
                 topics: ["channel-points-channel-v1"],
               })
                 .on("connected", () => {
-                  log(
-                    "<strong>Connected! 🎉</strong><br/>",
-                    "<pre><code>",
+                  highlightCode(
                     JSON.stringify(
                       {
                         channelId: data.user_id,
@@ -194,24 +195,25 @@
                       },
                       null,
                       2
-                    ),
-                    "</code></pre>",
-                    `Try redeeming a <strong>custom reward</strong> in your channel and see what happens, ${data.login}.`,
-                    `<a href="https://www.twitch.tv/${data.login}/chat" target="_blank">(open in new tab)</a>`
-                  );
-                  highlightCode();
+                    )
+                  ).then((code) => {
+                    log(
+                      "<div><strong>Connected! 🎉</strong></div>",
+                      code,
+                      `<p>Try redeeming a <strong>custom reward</strong> in your channel and see what happens, ${data.login}.`,
+                      `<a href="https://www.twitch.tv/${data.login}/chat" target="_blank">(open in new tab)</a></p>`
+                    );
+                  });
                 })
                 .on("disconnected", () => {
                   log("Disconnected", "💤");
                 })
                 .on("reward", (reward) => {
-                  log(
-                    "Reward data:",
-                    "<pre><code>",
-                    JSON.stringify(reward, null, 2),
-                    "</code></pre>"
+                  highlightCode(JSON.stringify(reward, null, 2)).then(
+                    (code) => {
+                      log(`<div><strong>Reward data:</strong></div>`, code);
+                    }
                   );
-                  highlightCode();
                 });
               logInLogOut.innerHTML = logoutHtml;
             } else {
