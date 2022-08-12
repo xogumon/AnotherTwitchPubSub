@@ -160,18 +160,15 @@
         });
       }
 
-      function highlightCode(code, language, addPre = true) {
-        const pre = document.createElement("pre");
-        pre.className = "hljs";
-        pre.innerHTML = addPre ? `<code class="${language}">${code}</code>` : code;
-        hljs.highlightBlock(pre);
-        return pre.innerHTML;
-
+      function highlightCode(code, addPreTag = true) {
         return new Promise((resolve, reject) => {
           try {
             const hljs = window.hljs;
-            const highlightedCode = hljs.highlightAuto(code).value;
-            resolve(highlightedCode);
+            const code = hljs.highlightAuto(code).value;
+            const highlighted = addPreTag
+              ? `<pre><code>${code}</code></pre>`
+              : code;
+            resolve(highlighted);
           } catch (error) {
             reject(error);
           }
