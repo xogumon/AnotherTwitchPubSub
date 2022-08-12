@@ -189,6 +189,12 @@
                     `Try redeeming a <strong>custom reward</strong> in your channel and see what happens, ${data.login}.`,
                     `<a href="https://www.twitch.tv/${data.login}/chat" target="_blank">(open in new tab)</a>`
                   );
+                  if (hljs) {
+                    const codes = document.querySelectorAll("pre code");
+                    codes.forEach((code) => {
+                      hljs.highlightBlock(code);
+                    });
+                  }
                 })
                 .on("disconnected", () => {
                   log("Disconnected", "💤");
