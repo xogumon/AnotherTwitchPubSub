@@ -8,7 +8,7 @@
   </head>
   <link
     rel="stylesheet"
-    href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.6.0/build/styles/github-dark-dimmed.min.css"
+    href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.6.0/build/styles/github-dark-dimmed.min.css"
   />
   <style>
     * {
@@ -46,24 +46,24 @@
       overflow: auto;
     }
 
-    .log div {
+    .log > div {
       max-width: 100%;
       padding: 2rem 1.5rem;
       border-bottom: 0.1rem solid #161a20;
       background-color: #22272e;
     }
 
-    .log div:first-child {
+    .log > div:first-child {
       box-shadow: 0px 10px 20px 20px #22272e;
       position: sticky;
       top: 0;
     }
 
-    .log div:last-child {
+    .log > div:last-child {
       margin-bottom: 0;
     }
 
-    .log div pre {
+    .log > div pre {
       white-space: pre-wrap;
       word-break: break-all;
       padding: 10px 0;
@@ -84,7 +84,7 @@
   <body>
     <div class="login-logout"></div>
     <div class="log"></div>
-    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.6.0/build/highlight.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.6.0/build/highlight.min.js"></script>
     <script src="../dist/twitch.pubsub.min.js"></script>
     <script>
       let pubsub;
@@ -160,7 +160,13 @@
         });
       }
 
-      function highlightCode(code) {
+      function highlightCode(code, language, addPre = true) {
+        const pre = document.createElement("pre");
+        pre.className = "hljs";
+        pre.innerHTML = addPre ? `<code class="${language}">${code}</code>` : code;
+        hljs.highlightBlock(pre);
+        return pre.innerHTML;
+
         return new Promise((resolve, reject) => {
           try {
             const hljs = window.hljs;
