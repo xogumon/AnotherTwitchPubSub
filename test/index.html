@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AnotherTwitchPubSub test</title>
+    <title>AnotherTwitchPubSub</title>
   </head>
   <link
     rel="stylesheet"
@@ -21,11 +21,20 @@
       font-family: sans-serif;
       font-size: 0.8rem;
       line-height: 1.5;
-      color: #333;
-      background-color: #fff;
+      color: #f5f5f5;
+      background-color: #22272e;
       overflow: hidden;
       width: 100vw;
       height: 100vh;
+    }
+
+    a {
+      color: #96d0ff;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
     }
 
     .log {
@@ -39,49 +48,18 @@
 
     .log div {
       max-width: 100%;
-      padding: 0.5rem;
-    }
-
-    .log div:nth-child(even) {
-      background-color: #f5f5f5;
-    }
-
-    .log div:nth-child(odd) {
-      background-color: #fff;
+      padding: 2rem 1.5rem;
+      border-bottom: 0.1rem solid #161a20;
     }
 
     .log div:first-child {
-      background-color: #22272e;
-      border-bottom: 0.1rem solid #fff;
-      color: #fff;
+      box-shadow: 0px 10px 20px 20px #22272e;
       position: sticky;
       top: 0;
     }
 
-    .log div:first-child a {
-      color: #96d0ff;
-    }
-
     .log div:last-child {
       margin-bottom: 0;
-    }
-
-    .log div:hover {
-      background-color: #22272e;
-      color: #fff;
-    }
-
-    .log div a {
-      color: #000;
-      text-decoration: none;
-    }
-
-    .log div a:hover {
-      text-decoration: underline;
-    }
-
-    .log div:hover a {
-      color: #fff;
     }
 
     .log div pre {
