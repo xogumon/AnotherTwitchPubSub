@@ -87,149 +87,155 @@
     <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.6.0/build/highlight.min.js"></script>
     <script src="../dist/twitch.pubsub.min.js"></script>
     <script>
-      let pubsub;
+      window.onload = () => {
+        let pubsub;
 
-      const clientId = "eipyhgddfyvrltazgwovyp8j5cnveq"; // Replace with your client ID
-      const redirectURI = "https://xogumon.github.io/AnotherTwitchPubSub/test"; // Replace with your redirect URI
-      const scopes = ["channel:read:redemptions"]; // Replace with your scopes
-      const log = (...args) => {
-        const docLog = document.querySelector(".log");
-        docLog.innerHTML += `<div>${args.join(" ")}</div>`;
-      };
-      function parseFragment(hash) {
-        const hashMatch = function (re) {
-          const match = hash.match(re);
-          return match ? match[1] : null;
+        const clientId = "eipyhgddfyvrltazgwovyp8j5cnveq"; // Replace with your client ID
+        const redirectURI =
+          "https://xogumon.github.io/AnotherTwitchPubSub/test"; // Replace with your redirect URI
+        const scopes = ["channel:read:redemptions"]; // Replace with your scopes
+        const log = (...args) => {
+          const docLog = document.querySelector(".log");
+          docLog.innerHTML += `<div>${args.join(" ")}</div>`;
         };
-        const state = hashMatch(/state=(\w+)/);
-        if (sessionStorage.getItem("twitchOAuthState") === state) {
-          sessionStorage.setItem("twitchOAuthToken", hashMatch(/token=(\w+)/));
-        }
-        return (window.location.hash = "");
-      }
-
-      function authUrl() {
-        const state = Math.random().toString(36).substring(2);
-        sessionStorage.setItem("twitchOAuthState", state);
-        return `https://id.twitch.tv/oauth2/authorize?client_id=${clientId}&redirect_uri=${redirectURI}&response_type=token&scope=${scopes.join(
-          "%20"
-        )}&state=${state}`;
-      }
-
-      const loginHtml = `<a href="javascript:void(0)" onclick="logIn()">Connect</a>`;
-      const logoutHtml = `<a href="javascript:void(0)" onclick="logOut()">Disconnect</a>`;
-
-      const logInLogOut = document.querySelector(".login-logout");
-
-      const logIn = () => {
-        window.location.href = authUrl();
-      };
-
-      const logOut = () => {
-        sessionStorage.removeItem("twitchOAuthToken");
-        sessionStorage.removeItem("twitchOAuthState");
-        if (typeof pubsub !== "undefined") {
-          if (pubsub.state() === "open") {
-            pubsub.disconnect();
-          }
-        }
-        logInLogOut.innerHTML = loginHtml;
-      };
-
-      function validateToken() {
-        return new Promise(async (resolve, reject) => {
-          try {
-            const state = sessionStorage.getItem("twitchOAuthState");
-            const token = sessionStorage.getItem("twitchOAuthToken");
-            if (!token && !state) {
-              resolve(logIn());
-            }
-            const response = await fetch(
-              "https://id.twitch.tv/oauth2/validate",
-              {
-                headers: {
-                  Authorization: `OAuth ${token}`,
-                },
-              }
+        function parseFragment(hash) {
+          const hashMatch = function (re) {
+            const match = hash.match(re);
+            return match ? match[1] : null;
+          };
+          const state = hashMatch(/state=(\w+)/);
+          if (sessionStorage.getItem("twitchOAuthState") === state) {
+            sessionStorage.setItem(
+              "twitchOAuthToken",
+              hashMatch(/token=(\w+)/)
             );
-            const data = await response.json();
-            resolve({ ...data, token });
-          } catch (error) {
-            reject(error);
           }
-        });
-      }
-
-      function highlightCode(code, addPreTag = true) {
-        return new Promise((resolve, reject) => {
-          try {
-            const hljs = window.hljs;
-            const code = hljs.highlightAuto(code).value;
-            const highlighted = addPreTag
-              ? `<pre><code>${code}</code></pre>`
-              : code;
-            resolve(highlighted);
-          } catch (error) {
-            reject(error);
-          }
-        });
-      }
-
-      (function () {
-        if (window.location.hash) {
-          parseFragment(window.location.hash);
+          return (window.location.hash = "");
         }
 
-        validateToken()
-          .then((data) => {
-            if (data.token && data.user_id) {
-              pubsub = new AnotherTwitchPubSub({
-                channelId: data.user_id,
-                authToken: data.token,
-                topics: ["channel-points-channel-v1"],
-              })
-                .on("connected", () => {
-                  highlightCode(
-                    JSON.stringify(
-                      {
-                        channelId: data.user_id,
-                        authToken: data.token,
-                        topics: ["channel-points-channel-v1"],
-                      },
-                      null,
-                      2
-                    )
-                  ).then((code) => {
-                    log(
-                      "<div><strong>Connected! 🎉</strong></div>",
-                      code,
-                      `<p>Try redeeming a <strong>custom reward</strong> in your channel and see what happens, ${data.login}.`,
-                      `<a href="https://www.twitch.tv/${data.login}/chat" target="_blank">(open in new tab)</a></p>`
-                    );
-                  });
-                })
-                .on("disconnected", () => {
-                  log("Disconnected", "💤");
-                })
-                .on("reward", (reward) => {
-                  highlightCode(JSON.stringify(reward, null, 2)).then(
-                    (code) => {
-                      log(`<div><strong>Reward data:</strong></div>`, code);
-                    }
-                  );
-                });
-              logInLogOut.innerHTML = logoutHtml;
-            } else {
-              logInLogOut.innerHTML = loginHtml;
+        function authUrl() {
+          const state = Math.random().toString(36).substring(2);
+          sessionStorage.setItem("twitchOAuthState", state);
+          return `https://id.twitch.tv/oauth2/authorize?client_id=${clientId}&redirect_uri=${redirectURI}&response_type=token&scope=${scopes.join(
+            "%20"
+          )}&state=${state}`;
+        }
+
+        const loginHtml = `<a href="javascript:void(0)" onclick="logIn()">Connect</a>`;
+        const logoutHtml = `<a href="javascript:void(0)" onclick="logOut()">Disconnect</a>`;
+
+        const logInLogOut = document.querySelector(".login-logout");
+
+        const logIn = () => {
+          window.location.href = authUrl();
+        };
+
+        const logOut = () => {
+          sessionStorage.removeItem("twitchOAuthToken");
+          sessionStorage.removeItem("twitchOAuthState");
+          if (typeof pubsub !== "undefined") {
+            if (pubsub.state() === "open") {
+              pubsub.disconnect();
             }
-          })
-          .catch(() => {
-            if (sessionStorage.getItem("twitchOAuthToken")) {
-              log("Error:", "Something went wrong, please try again");
-              logOut();
+          }
+          logInLogOut.innerHTML = loginHtml;
+        };
+
+        function validateToken() {
+          return new Promise(async (resolve, reject) => {
+            try {
+              const state = sessionStorage.getItem("twitchOAuthState");
+              const token = sessionStorage.getItem("twitchOAuthToken");
+              if (!token && !state) {
+                resolve(logIn());
+              }
+              const response = await fetch(
+                "https://id.twitch.tv/oauth2/validate",
+                {
+                  headers: {
+                    Authorization: `OAuth ${token}`,
+                  },
+                }
+              );
+              const data = await response.json();
+              resolve({ ...data, token });
+            } catch (error) {
+              reject(error);
             }
           });
-      })();
+        }
+
+        function highlightCode(code, addPreTag = true) {
+          return new Promise((resolve, reject) => {
+            try {
+              const hljs = window.hljs;
+              const code = hljs.highlightAuto(code);
+              const highlighted = addPreTag
+                ? `<pre><code class="hljs ${code.language}">${code.value}</code></pre>`
+                : code.value;
+              resolve(highlighted);
+            } catch (error) {
+              reject(error);
+            }
+          });
+        }
+
+        (function () {
+          if (window.location.hash) {
+            parseFragment(window.location.hash);
+          }
+
+          validateToken()
+            .then((data) => {
+              if (data.token && data.user_id) {
+                pubsub = new AnotherTwitchPubSub({
+                  channelId: data.user_id,
+                  authToken: data.token,
+                  topics: ["channel-points-channel-v1"],
+                })
+                  .on("connected", () => {
+                    highlightCode(
+                      JSON.stringify(
+                        {
+                          channelId: data.user_id,
+                          authToken: data.token,
+                          topics: ["channel-points-channel-v1"],
+                        },
+                        null,
+                        2
+                      )
+                    ).then((code) => {
+                      log(
+                        "<div><strong>Connected! 🎉</strong></div>",
+                        code,
+                        `<p>Try redeeming a <strong>custom reward</strong> in your channel and see what happens, ${data.login}.`,
+                        `<a href="https://www.twitch.tv/${data.login}/chat" target="_blank">(open in new tab)</a></p>`
+                      );
+                    });
+                  })
+                  .on("disconnected", () => {
+                    log("Disconnected", "💤");
+                  })
+                  .on("reward", (reward) => {
+                    highlightCode(JSON.stringify(reward, null, 2)).then(
+                      (code) => {
+                        log(`<div><strong>Reward data:</strong></div>`, code);
+                      }
+                    );
+                  });
+                logInLogOut.innerHTML = logoutHtml;
+              } else {
+                logInLogOut.innerHTML = loginHtml;
+              }
+            })
+            .catch(() => {
+              if (sessionStorage.getItem("twitchOAuthToken")) {
+                log("Error:", "Something went wrong, please try again");
+                logOut();
+              }
+            });
+        })();
+      };
     </script>
   </body>
 </html>
