@@ -8,7 +8,7 @@
   </head>
   <link
     rel="stylesheet"
-    href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.6.0/build/styles/default.min.css"
+    href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.6.0/build/styles/github-dark-dimmed.min.css"
   />
   <style>
     * {
@@ -83,9 +83,10 @@
 
     .login-logout a {
       position: fixed;
-      left: 0;
+      right: 1.5rem;
       bottom: 0;
-      padding: 0.5rem;
+      padding: 0.8rem;
+      text-decoration: none;
       background-color: #222;
       color: #ccc;
       z-index: 1;
@@ -127,8 +128,8 @@
         )}&state=${state}`;
       }
 
-      const loginHtml = `<a href="javascript:void(0)" onclick="login()">Connect</a>`;
-      const logoutHtml = `<a href="javascript:void(0)" onclick="logout()">Disconnect</a>`;
+      const loginHtml = `<a href="javascript:void(0)" onclick="logIn()">Connect</a>`;
+      const logoutHtml = `<a href="javascript:void(0)" onclick="logOut()">Disconnect</a>`;
 
       const logInLogOut = document.querySelector(".login-logout");
       if (sessionStorage.getItem("twitchOAuthToken")) {
