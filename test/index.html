@@ -81,13 +81,14 @@
       word-break: break-all;
     }
 
-    .login-logout {
-      position: absolute;
-      top: 0;
-      right: 0;
+    .login-logout a {
+      position: fixed;
+      left: 0;
+      bottom: 0;
       padding: 0.5rem;
-      background-color: #fff;
-      border-bottom: 1px solid #ccc;
+      background-color: #222;
+      color: #ccc;
+      z-index: 1;
     }
   </style>
 
@@ -191,8 +192,8 @@
                 .on("connected", () => {
                   log(
                     "<strong>Connected! 🎉</strong><br/>",
-                    `<em>channelId: ${data.user_id}</em><br/>`,
-                    `<em>authToken: ${data.token}</em><br/>`,
+                    `<em>channelId: "${data.user_id}"</em><br/>`,
+                    `<em>authToken: "${data.token}"</em><br/>`,
                     "Try redeeming a <strong>custom reward</strong> in your channel",
                     `(<a href="https://www.twitch.tv/${data.login}/chat" target="_blank">twitch.tv/${data.login}/chat</a>)`
                   );
