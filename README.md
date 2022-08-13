@@ -8,7 +8,7 @@
 
 It's a simple library that allows you to easily subscribe to Twitch PubSub channels and receive messages from them in real time. It is based on the [Twitch PubSub API](https://dev.twitch.tv/docs/pubsub) and uses the WebSocket protocol to connect to the Twitch PubSub server. You can create beautiful real-time applications with it, like a redemption system for your _Twitch Channel Points_. To infinity and beyond!
 
-### CDN Links
+## CDN Links
 
 - [x] **jsDelivr:** [https://cdn.jsdelivr.net/gh/xogumon/AnotherTwitchPubSub/dist/twitch.pubsub.min.js](https://cdn.jsdelivr.net/gh/xogumon/AnotherTwitchPubSub/dist/twitch.pubsub.min.js)
 
@@ -16,7 +16,7 @@ If you want to use the library in your project, you can use the CDN link above o
 
 Use only the minified version of the library, as it is smaller and faster to load. And don't use older versions, as they might be broken. The latest version is only version you can trust.
 
-### Installation
+## Installation
 
 ```html
 <script src="https://cdn.jsdelivr.net/gh/xogumon/AnotherTwitchPubSub/dist/twitch.pubsub.min.js"></script>
@@ -179,11 +179,11 @@ pubsub.isRegisteredTopic("<String>"); // Check if topic is registered (Boolean)
 
 _All event names are case-insensitive_
 
-### Token generation
+## Token generation
 
 You can generate a token here: [https://xogumon.github.io/AnotherTwitchPubSub/token](https://xogumon.github.io/AnotherTwitchPubSub/token)
 
-### Twitch PubSub documentation
+## Twitch PubSub documentation
 
 You can also find more information about the PubSub system [here](https://dev.twitch.tv/docs/pubsub/).
 
@@ -191,11 +191,11 @@ You can also find more information about the PubSub system [here](https://dev.tw
 
 [MIT](LICENSE)
 
-### Changelog
+## Changelog
 
 To see a full changelog, check out the [changelog](CHANGELOG.md) page on the GitHub repo.
 
-### Let's contribute!
+## Let's contribute!
 
 - [Create a pull request](https://github.com/xogumon/AnotherTwitchPubSub/pulls)
 - [Report an issue](https://github.com/xogumon/AnotherTwitchPubSub/issues)
