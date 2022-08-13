@@ -181,7 +181,7 @@ _All event names are case-insensitive_
 
 ### Token generation
 
-You can generate a token here: [https://token.decicus.com/](https://token.decicus.com/)
+You can generate a token here: [https://xogumon.github.io/AnotherTwitchPubSub/token](https://xogumon.github.io/AnotherTwitchPubSub/token)
 
 ### Twitch PubSub documentation
 

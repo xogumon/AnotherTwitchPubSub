@@ -156,7 +156,7 @@
               const state = sessionStorage.getItem("twitchOAuthState");
               const token = sessionStorage.getItem("twitchOAuthToken");
               if (!token && !state) {
-                resolve(logIn());
+                return resolve(logIn());
               }
               const response = await fetch(
                 "https://id.twitch.tv/oauth2/validate",
@@ -174,8 +174,14 @@
           });
         }
 
-        function blur(element) {
-          element.classList.add("blur");
+        function toggleBlur(element) {
+          try {
+            element.classList.toggle("blur");
+            return true;
+          } catch (error) {
+            console.error(error);
+            return false;
+          }
         }
 
         function highlightCode(code, addPreTag = true) {
@@ -221,19 +227,54 @@
                       false
                     ).then((code) => {
                       log(
-                        `<div><strong>Connected!</strong> 🎉 ${code}</div>`,
+                        `<div><strong>Connected!</strong> ✅ <a class="blur" href="javascript:void(0)" onclick="toggleBlur(this)" title="Click to show/hide">${code}</a></div>`,
                         `<p>Try redeeming a <strong>custom reward</strong> in your channel and see what happens, ${data.login}.`,
                         `<a href="https://www.twitch.tv/${data.login}/chat" target="_blank">(open in new tab)</a></p>`
                       );
                     });
                   })
-                  .on("disconnected", () => {
-                    log("Disconnected", "💤");
+                  .on("disconnected", (data) => {
+                    log(
+                      `<div><strong>Disconnected!</strong> 💀</div>`,
+                      highlightCode(JSON.stringify(data, null, 2))
+                    );
+                  })
+                  .on("error", (error) => {
+                    if (typeof error === "string") {
+                      log(
+                        `<div><strong>Error!</strong> ❌</div>`,
+                        `<p>${error}</p>`
+                      );
+                    } else if (error instanceof Error) {
+                      log(
+                        `<div><strong>Error!</strong> ❌</div>`,
+                        `<p>${error.message}</p>`
+                      );
+                    } else {
+                      log(
+                        `<div><strong>Error!</strong> ❌</div>`,
+                        highlightCode(JSON.stringify(error, null, 2))
+                      );
+                    }
+                  })
+                  .on("ping", () => {
+                    log("Ping?", "🤔");
+                  })
+                  .on("pong", (data) => {
+                    log(
+                      "Pong!",
+                      highlightCode(JSON.stringify(data, null, 2)),
+                      "🤖"
+                    );
                   })
                   .on("reward", (reward) => {
                     highlightCode(JSON.stringify(reward, null, 2)).then(
                       (code) => {
-                        log(`<div><strong>Reward data:</strong></div>`, code);
+                        log(
+                          `<div><strong>Reward data:</strong></div>`,
+                          code,
+                          "🎉"
+                        );
                       }
                     );
                   });
