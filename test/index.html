@@ -79,14 +79,13 @@
       z-index: 1;
     }
 
-    span.highlight code {
-      background-color: #111418 !important;
-      padding: 0.1rem !important;
-      border-radius: 0.6rem;
-    }
-
     .blur {
       filter: blur(0.5rem);
+      text-decoration: none !important;
+    }
+
+    .blur:hover {
+      text-decoration: none !important;
     }
   </style>
 
@@ -205,9 +204,8 @@
 
         validateToken()
           .then((data) => {
-            if (data.token && data.user_id) {
+            if (data.token) {
               pubsub = new AnotherTwitchPubSub({
-                channelId: data.user_id,
                 authToken: data.token,
                 topics: ["channel-points-channel-v1"],
               })
@@ -215,7 +213,6 @@
                   highlightCode(
                     JSON.stringify(
                       {
-                        channelId: data.user_id,
                         authToken: data.token,
                         topics: ["channel-points-channel-v1"],
                       },

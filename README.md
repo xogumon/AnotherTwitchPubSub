@@ -1,6 +1,6 @@
 # AnotherTwitchPubSub
 
-[![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/xogumon/AnotherTwitchPubSub?color=blueviolet&include_prereleases)](https://github.com/xogumon/AnotherTwitchPubSub/releases/latest) [![Minified file size in bytes](https://img.shields.io/github/size/xogumon/AnotherTwitchPubSub/dist/twitch.pubsub.min.js)](https://github.com/xogumon/AnotherTwitchPubSub/releases/latest/download/twitch.pubsub.min.js) [![GitHub](https://img.shields.io/github/license/xogumon/AnotherTwitchPubSub)](LICENSE)
+[![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/xogumon/AnotherTwitchPubSub?color=blueviolet&include_prereleases)](https://github.com/xogumon/AnotherTwitchPubSub/releases/latest) [![GitHub](https://img.shields.io/github/license/xogumon/AnotherTwitchPubSub)](LICENSE)
 
 ---
 
@@ -10,26 +10,25 @@ It's a simple library that allows you to easily subscribe to Twitch PubSub chann
 
 ## CDN Links
 
-- [x] **jsDelivr:** [https://cdn.jsdelivr.net/gh/xogumon/AnotherTwitchPubSub/dist/twitch.pubsub.min.js](https://cdn.jsdelivr.net/gh/xogumon/AnotherTwitchPubSub/dist/twitch.pubsub.min.js)
+- [x] **jsDelivr:** [https://cdn.jsdelivr.net/gh/xogumon/AnotherTwitchPubSub@next/dist/bundle.min.js](https://cdn.jsdelivr.net/gh/xogumon/AnotherTwitchPubSub@next/dist/bundle.min.js)
 
-If you want to use the library in your project, you can use the CDN link above or download the library directly from [the latest version](https://github.com/xogumon/AnotherTwitchPubSub/releases/latest/download/twitch.pubsub.min.js).
+If you want to use the library in your project, you can use the CDN link above or download the library directly from [the latest version](https://github.com/xogumon/AnotherTwitchPubSub/releases/latest/download/bundle.min.js).
 
 Use only the minified version of the library, as it is smaller and faster to load. And don't use older versions, as they might be broken. The latest version is only version you can trust.
 
 ## Installation
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/xogumon/AnotherTwitchPubSub/dist/twitch.pubsub.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/xogumon/AnotherTwitchPubSub@next/dist/bundle.min.js"></script>
 <script>
-  const pubsub = new AnotherTwitchPubSub({
-    channelId: "147018336", // Channel ID
-    authToken: "cfabdegwdoklmawdzdo98xt2fo512y", // Auth token
+  new AnotherTwitchPubSub({
+    accessToken: "cfabdegwdoklmawdzdo98xt2fo512y", // Your access token
     topics: ["channel-bits-events-v2", "channel-points-channel-v1"], // Topics to subscribe to
   });
 </script>
 ```
 
-You don't need include the channel ID in the topics array. It will be automatically added.
+You no longer need to pass a channelId in the constructor (the validate token will do it for you) when you create a new instance of the library.
 
 ### Available topics
 
@@ -38,14 +37,13 @@ You don't need include the channel ID in the topics array. It will be automatica
 ### Usage
 
 ```js
-const pubsub = new AnotherTwitchPubSub({
-  channelId: "<YOUR CHANNEL ID>", // Channel ID (required)
-  authToken: "<YOUR AUTH TOKEN>", // You can get this from the Twitch API (required)
-  topics: ["<ARRAY OF TOPICS>"], // You can found all the topics in the Twitch PubSub API documentation (https://dev.twitch.tv/docs/pubsub) (required) // You don't need include the channel ID in the topics array. It will be automatically added.
+new AnotherTwitchPubSub({
+  accessToken: "<YOUR ACCESS TOKEN>", // You can get this from the Twitch API (required) (see below) - Renamed from "authToken" in v1.0.0-beta.1
+  topics: ["<ARRAY OF TOPICS>"], // You can found all the topics in the Twitch PubSub API documentation (https://dev.twitch.tv/docs/pubsub) (required)
   autoConnect: true, // automatically connect to Twitch PubSub (default: true) - added in v0.1.1
-  autoReconnect: true, // automatically reconnect to Twitch PubSub if connection is lost (default: true) - added in v0.1.1 / renamed in v0.1.2
+  autoReconnect: true, // automatically reconnect to Twitch PubSub if connection is lost (default: true) - added in v0.1.1 - renamed from "reconnect" in v0.1.2
   reconnectAttempts: 10, // number of reconnect attempts (default: 10) - added in v0.1.2
-  reconnectInterval: 1000, // time between reconnect attempts (default: 1000) - added in v0.1.2
+  reconnectInterval: 10000, // time between reconnect attempts (default: 10000) - added in v0.1.2
 })
   .on("connected", () => {
     // Do something when connected
@@ -155,27 +153,29 @@ pubsub.isRegisteredTopic("<String>"); // Check if topic is registered (Boolean)
 - `AUTOMOD-QUEUE` _(all events from `AUTOMOD-QUEUE` pubsub topic)_
 - `CONNECTED` _(added in v0.2.0-beta.1)_
 - `CHANNEL-BITS-BADGE-UNLOCKS` _(or just `BITSBADGE`)_
-- CHANNEL-BITS-EVENTS-V1 (or V2) _(or just `BITS`)_
-- CHANNEL-POINTS-CHANNEL-V1 _(all events from `CHANNEL-POINTS-CHANNEL-V1`)_
-- CHANNEL-SUBSCRIBE-EVENTS-V1 _(all events from `CHANNEL-SUBSCRIBE-EVENTS-V1`)_
-- CHAT-MODERATOR-ACTIONS _(all events from `CHAT-MODERATOR-ACTIONS`)_
+- `CHANNEL-BITS-EVENTS-V1` (or V2) _(or just `BITS`)_
+- `CHANNEL-POINTS-CHANNEL-V1` _(all events from `CHANNEL-POINTS-CHANNEL-V1`)_
+- `CHANNEL-SUBSCRIBE-EVENTS-V1` _(all events from `CHANNEL-SUBSCRIBE-EVENTS-V1`)_
+- `CHAT-MODERATOR-ACTIONS` _(all events from `CHAT-MODERATOR-ACTIONS`)_
 - ~~CLOSE~~ _(renamed to `DISCONNECTED` in v0.2.0-beta.2)_
-- DISCONNECT
-- DISCONNECTED _(added in v0.2.0-beta.1)_
-- ERROR
-- LISTEN
-- MESSAGE _(raw message data)_
+- `DISCONNECT`
+- `DISCONNECTED` _(added in v0.2.0-beta.1)_
+- `ERROR`
+- `LISTEN`
+- `MESSAGE` _(raw message data)_
 - ~~OPEN~~ _(renamed to `CONNECTED` in v0.2.0-beta.1)_
-- PING _(when the client pings the server)_
-- PONG _(response to ping from pubsub)_
-- RECONNECT
-- RESPONSE _(raw response message to requests)_
-- REWARD-REDEEMED _(added in v0.1.1)_
-- UNLISTEN
-- USER-MODERATION-NOTIFICATIONS _(all events from `USER-MODERATION-NOTIFICATIONS` topic)_
-- WARNING _(added in v0.1.2)_ _(warning when the latency is too high)_
-- WHISPER-RECEIVED _(added in v0.2.0-beta.1)_
-- WHISPERS _(all events in the `WHISPERS` namespace)_
+- `PING` _(when the client pings the server)_
+- `PONG` _(response to ping from pubsub)_
+- `RECONNECT`
+- `RESPONSE` _(raw response message to requests)_
+- `REWARD-REDEEMED` _(added in v0.1.1)_ _(or just `REWARD` - added in v0.1.2)_
+- `SUBSCRIBED` _(added in v1.0.0-beta.1)_ - When you successfully subscribe to a topic
+- `UNLISTEN`
+- `UNSUBSCRIBED` _(added in v1.0.0-beta.1)_ - When you successfully unsubscribe from a topic
+- `USER-MODERATION-NOTIFICATIONS` _(all events from `USER-MODERATION-NOTIFICATIONS` topic)_
+- `WARNING` _(added in v0.1.2)_ _(warning when the latency is too high)_
+- `WHISPER-RECEIVED` _(added in v0.2.0-beta.1)_
+- `WHISPERS` _(all events from the `WHISPERS` event)_
 
 _All event names are case-insensitive_
 

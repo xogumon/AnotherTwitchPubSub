@@ -1,9 +1,8 @@
 {
   "name": "anothertwitchpubsub",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "description": "Just another Twitch PubSub helper library",
-  "main": "src/twitch.pubsub.ts",
-  "types": "./src/@types/twitch.pubsub.d.ts",
+  "main": "src/index.ts",
   "scripts": {
     "build": "webpack --config webpack.config.js",
     "build:min": "set MINIFY=true&& webpack --config webpack.config.js",
@@ -11,7 +10,12 @@
   },
   "keywords": [
     "twitch",
-    "pubsub"
+    "pubsub",
+    "javascript",
+    "typescript",
+    "twitch-pubsub",
+    "twitch-api",
+    "browser"
   ],
   "author": "Ronis Xogum <ronis@xogum.net> (https://xogum.net)",
   "license": "MIT",

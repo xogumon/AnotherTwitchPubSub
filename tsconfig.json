@@ -1,18 +1,16 @@
 {
   "compilerOptions": {
-    "target": "ES6",
-    "lib": ["es6", "dom"],
+    "target": "es2017",
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
     "allowJs": true,
     "checkJs": true,
     "removeComments": true,
     "declaration": true,
-    "declarationDir": "./src/@types",
+    "declarationDir": "./@types",
     "outDir": "./build",
-    "rootDir": "./src",
-    "baseUrl": "./src"
+    "rootDir": "./src"
   },
-  "exclude": ["node_modules", "src/@types/**/*", "src/utils/**/*"],
+  "exclude": ["node_modules", "@types/**/*"],
   "include": ["src/**/*.ts"]
 }

@@ -109,3 +109,6 @@ package-lock.json
 
 # Example code for testing
 example/
+
+# Compiled typescript files
+build/

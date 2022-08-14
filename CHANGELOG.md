@@ -2,13 +2,40 @@
 
 _(before reporting an issue, please update to the latest version)_
 
+## v1.0.0-beta.1 - 2022-08-14
+
+### Features
+
+- Restructured codebase.
+- Added a token generator page: (https://xogumon.github.io/AnotherTwitchPubSub/token/).
+- Rewrite some methods (like `.subscribe()` and `.unsubscribe()` to support topics with two arguments)
+- You no longer need to pass a channelId in the constructor (the validate token will do it for you)
+- You can now pass a username in the subscribe topic (instead of the channelId/userId).
+  - Example:
+    ```js
+    pubsub.subscribe(
+      "chat_moderator_actions.<USER NAME or ID>.<CHANNEL NAME or ID>"
+    );
+    ```
+  - It's okay if you pass the channel Id/user Id in the topic instead of the channel name/user name.
+- Added a `SUBSCRIBED` and `UNSUBSCRIBED` event. This event is triggered when you subscribe or unsubscribe to a topic successfully. Returns a list of subscribed/unsubscribed topics.
+- Added support for listening to multiple events at once.
+
+### Other
+
+- The CDN link have a new format (https://cdn.jsdelivr.net/gh/xogumon/AnotherTwitchPubSub@next/dist/bundle.min.js)
+
+### Bug Fixes
+
+- Fixed internal conflicts with `Client` events.
+
 ## v0.2.0 - 2022-08-11
 
 - Fixed minor bugs.
 - Fixed the nonce generator method.
 - Renamed the repository to `AnotherTwitchPubSub`.
 - Removed all old versions from the repository.
-- Added a test page: [https://xogumon.github.io/AnotherTwitchPubSub/test](https://xogumon.github.io/AnotherTwitchPubSub/test)
+- Added a test page: (https://xogumon.github.io/AnotherTwitchPubSub/test)
 
   ***
 

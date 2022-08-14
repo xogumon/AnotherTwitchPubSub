@@ -4,7 +4,7 @@ const isMinify = process.env.MINIFY === "true";
 module.exports = {
   mode: "production", // "production" | "development" | "none"
   entry: {
-    "twitch.pubsub": "./src/twitch.pubsub.ts",
+    bundle: "./src/index.ts",
   },
   output: {
     path: path.resolve(__dirname, "dist"),

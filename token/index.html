@@ -271,7 +271,7 @@
             }
           });
         }
-        
+
         function highlightCode(code, addPreTag = true) {
           return new Promise((resolve, reject) => {
             try {
@@ -318,15 +318,17 @@
                 });
                 const cdnScript = document.createElement("script");
                 cdnScript.src =
-                  "https://cdn.jsdelivr.net/gh/xogumon/AnotherTwitchPubSub/dist/twitch.pubsub.min.js";
+                  "https://cdn.jsdelivr.net/gh/xogumon/AnotherTwitchPubSub@latest/dist/bundle.min.js";
                 const configScript = document.createElement("script");
                 configScript.innerHTML = `
   const pubsub = new AnotherTwitchPubSub({
-    "channelId": "${data.user_id}",
     "authToken": "${data.token}",
-    "topics": ["${scopes.join(`", "`)}"]
-  });
-  pubsub.on("connected", () => {
+    "topics": ["${scopes.join(
+      `", "`
+    )}"] // Add any topics you want to subscribe to here.
+  })
+  .on("connected", (e) => {
+    e.subscribe(["another-topic.userNameOrId.channelNameOrId"]); // Add additional topics here.
     console.log("Connected");
   });
 `;
