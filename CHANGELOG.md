@@ -7,7 +7,7 @@ _(before reporting an issue, please update to the latest version)_
 ### Features
 
 - Restructured codebase.
-- Added a token generator page: (https://xogumon.github.io/AnotherTwitchPubSub/token/).
+- Added a token generator page: https://token.xog.one/
 - Rewrite some methods (like `.subscribe()` and `.unsubscribe()` to support topics with two arguments)
 - You no longer need to pass a channelId in the constructor (the validate token will do it for you)
 - You can now pass a username in the subscribe topic (instead of the channelId/userId).
@@ -19,7 +19,6 @@ _(before reporting an issue, please update to the latest version)_
     ```
   - It's okay if you pass the channel Id/user Id in the topic instead of the channel name/user name.
 - Added a `SUBSCRIBED` and `UNSUBSCRIBED` event. This event is triggered when you subscribe or unsubscribe to a topic successfully. Returns a list of subscribed/unsubscribed topics.
-- Added support for listening to multiple events at once.
 
 ### Other
 

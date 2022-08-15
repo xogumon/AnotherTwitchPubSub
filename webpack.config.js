@@ -1,14 +1,15 @@
 const path = require("path");
-const isMinify = process.env.MINIFY === "true";
+const TerserPlugin = require("terser-webpack-plugin");
 
 module.exports = {
   mode: "production", // "production" | "development" | "none"
   entry: {
     bundle: "./src/index.ts",
+    "bundle.min": "./src/index.ts",
   },
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: `[name].${isMinify ? "min." : ""}js`,
+    filename: `[name].js`,
   },
   resolve: {
     extensions: [".ts", ".js"],
@@ -25,6 +26,18 @@ module.exports = {
   },
   target: "web",
   optimization: {
-    minimize: isMinify,
+    minimize: true,
+    minimizer: [
+      new TerserPlugin({
+        minify: TerserPlugin.uglifyJsMinify,
+        exclude: /node_modules/,
+        include: /\.min\.js$/,
+        terserOptions: {
+          mangle: {
+            toplevel: true,
+          }
+        },
+      }),
+    ],
   },
 };

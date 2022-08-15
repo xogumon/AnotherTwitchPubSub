@@ -37,7 +37,7 @@ You no longer need to pass a channelId in the constructor (the validate token wi
 ### Usage
 
 ```js
-new AnotherTwitchPubSub({
+const pubsub = new AnotherTwitchPubSub({
   accessToken: "<YOUR ACCESS TOKEN>", // You can get this from the Twitch API (required) (see below) - Renamed from "authToken" in v1.0.0-beta.1
   topics: ["<ARRAY OF TOPICS>"], // You can found all the topics in the Twitch PubSub API documentation (https://dev.twitch.tv/docs/pubsub) (required)
   autoConnect: true, // automatically connect to Twitch PubSub (default: true) - added in v0.1.1
@@ -181,7 +181,7 @@ _All event names are case-insensitive_
 
 ## Token generation
 
-You can generate a token here: [https://xogumon.github.io/AnotherTwitchPubSub/token](https://xogumon.github.io/AnotherTwitchPubSub/token)
+You can generate a token here: https://token.xog.one/ _(created for v0.2.0-beta.1)_
 
 ## Twitch PubSub documentation
 
